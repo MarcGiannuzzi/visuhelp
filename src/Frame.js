@@ -11,8 +11,6 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import setBackgroundColor from './VerticalBar'
 
 class Frame extends React.Component {
-
-
     constructor(props) {
         super(props);
         this.style = {
@@ -21,16 +19,18 @@ class Frame extends React.Component {
             margin:"auto", 
             width: "95%"
         }
+        
         this.refsVerticalBars = this.createVerticalBarsRefs()
         this.vertical_bars = this.createVerticalBars()
         // console.log(this.vertical_bars)
         this.frame = this.createFrame()
         // console.log(this.frame)
-
+        
         this.state = {
             style: this.style, 
             vertical_bars: this.vertical_bars,
-            frame: this.frame
+            frame: this.frame, 
+            nb_vertical_bars : this.props.nb_vertical_bars
         }
 
 
@@ -42,6 +42,7 @@ class Frame extends React.Component {
         this.mergeSort = this.mergeSort.bind(this);
         //this.merge = this.merge.bind(this);
 
+        console.log(this.state.vertical_bars)
     }
 
     createVerticalBarsRefs(){
@@ -53,6 +54,7 @@ class Frame extends React.Component {
     }
     
     createVerticalBars(new_vertical_bars=null){
+        console.log("createVerticalBars")
         if(new_vertical_bars === null){
             return Array.from(Array(this.props.nb_vertical_bars).keys()).map(index => 
                 <Col key={index} style={{flexBasis:"0", margin:'auto'}} xs={1} md={1}><VerticalBar ref={this.refsVerticalBars[index]} value={index} ></VerticalBar></Col>)
@@ -96,6 +98,7 @@ class Frame extends React.Component {
             return {frame:frame}
         }, () => {
         console.log("Frame refreshed.")
+        console.log("Callback setState modifyFrame finished")
         })
     }
 
@@ -137,7 +140,10 @@ class Frame extends React.Component {
             this.refsVerticalBars[randomIndex] = tmp_refVerticalBar
 
 
-            this.setState({vertical_bars:vertical_bars}, () => this.modifyFrame())
+            this.setState({vertical_bars:vertical_bars}, () => {
+                this.modifyFrame()
+                console.log("Callback setState shuffleFrame finished")
+            })
         }
       
     }
@@ -270,6 +276,10 @@ class Frame extends React.Component {
 
 
     render() {
+        console.log("Render")
+        this.vertical_bars = this.createVerticalBars()
+        this.frame = this.createFrame()
+
         var element_returned = <div>
             <Button variant="warning" onClick={() => {
               this.shuffleFrame()
@@ -284,9 +294,9 @@ class Frame extends React.Component {
             }}>Merge sort</Button>
           </ButtonGroup>
           <hr></hr>
-          {this.state.frame}
+          
+          {this.frame}
         </div>
-
         return element_returned
     }
   }

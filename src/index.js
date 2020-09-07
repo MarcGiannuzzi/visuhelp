@@ -13,9 +13,7 @@ import Button from 'react-bootstrap/Button';
 
 
 import App from './App';
-import Frame from './Frame';
 
-import VerticalBar from './VerticalBar'
 
 import * as serviceWorker from './serviceWorker';
 
@@ -46,34 +44,34 @@ ReactDOM.render(
     <p>
       Welcome in VisuHelp
     </p>
-    <hr></hr>
-    <hr></hr>
-    <hr></hr>
+    <br></br>
+    <br></br>
+    <br></br>
   </React.StrictMode>,
   document.getElementById('welcome')
 );
 
 
-ReactDOM.render(
-  <React.StrictMode>
-    <span style={{fontSize:"15px"}}>Number of vertical bars : </span>
-    <input value="5" style={{fontSize:"15px", width:"2cm"}} id="id_input_nb_bars" onchange={() => {
-      ReactDOM.render(
-        <React.StrictMode>
-          <App nb_vertical_bars={parseInt(document.getElementById("id_input_nb_bars").value)}/>
-        </React.StrictMode>,
-        document.getElementById('app')
-      );
-    }}/>
-  </React.StrictMode>,
-  document.getElementById('params')
-);
+// ReactDOM.render(
+//   <React.StrictMode>
+//     <span style={{fontSize:"15px"}}>Number of vertical bars : </span>
+//     <input defaultValue="5" style={{fontSize:"15px", width:"2cm"}} id="id_input_nb_bars" onChange={() => {
+//       ReactDOM.render(
+//         <React.StrictMode>
+//           <App/>
+//         </React.StrictMode>,
+//         document.getElementById('app')
+//       );
+//     }}/>
+//   </React.StrictMode>,
+//   document.getElementById('params')
+// );
 
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App nb_vertical_bars={parseInt(document.getElementById("id_input_nb_bars").value)}/>
-  </React.StrictMode>,
+    <React.StrictMode>
+      <App></App>
+    </React.StrictMode>,
   document.getElementById('app')
 );
 

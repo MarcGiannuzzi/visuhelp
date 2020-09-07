@@ -1,0 +1,12 @@
+When a parent is updated, it's child constructor is not called, only it's child render method.
+To pass information from a parent to a child, we need to pass it through the child props (related to the state of the parent).
+
+
+When there is a change in an element in React, ONLY THE RENDER METHOD IS CALLED, NOT THE CONSTRUCTOR !
+
+ORDRE : The setState callback finishes before the end of the render function.
+
+For next time : 
+    this.vertical_bars = this.createVerticalBars()
+    this.frame = this.createFrame()
+Ces deux lignes dans le render de Frame.js empêchent les shuffle
