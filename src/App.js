@@ -19,23 +19,34 @@ class App extends React.Component {
       nb_vertical_bars : this.initial_nb_vertical_bars,
       speed : this.props.speed
     }
+    this.changeNumberVerticalBars = this.changeNumberVerticalBars.bind(this);
   }
+
+
+  changeNumberVerticalBars(event){
+    var new_nb_vertical_bars = parseInt(event.target.value)
+    console.log("new_nb_vertical_bars :", new_nb_vertical_bars)
+    console.log("event : ", event)
+    this.setState((state) => {
+      if(!isNaN(new_nb_vertical_bars)){
+        return {nb_vertical_bars:new_nb_vertical_bars}
+      }
+      else{
+        return {nb_vertical_bars:2}
+      }
+      
+    }, () => {
+      console.log("App refreshed.")
+    })
+  }
+
   render(){
     var app = <div>
     <span style={{fontSize:"15px"}}>Number of vertical bars : </span>
-    <input defaultValue={parseInt(this.state.nb_vertical_bars)} style={{fontSize:"15px", width:"2cm"}} id="id_input_nb_bars" onChange={(event) => {
-      var new_nb_vertical_bars = parseInt(event.target.value)
-      console.log("event : ", event)
-      this.setState((state) => {
-        return {nb_vertical_bars:new_nb_vertical_bars}
-      }, () => {
-        console.log("App refreshed.")
-      })
-    }}/>
+    <input defaultValue={parseInt(this.state.nb_vertical_bars)} style={{fontSize:"15px", width:"2cm"}} id="id_input_nb_bars" onChange={this.changeNumberVerticalBars}/>
      <div className="App">
       <header className="App-header">
       {/* Thanks https://www.flaticon.com/authors/kiranshastry */}
-      
         <Frame nb_vertical_bars={parseInt(this.state.nb_vertical_bars)}></Frame>
       </header>
     </div>

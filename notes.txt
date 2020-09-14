@@ -4,9 +4,7 @@ To pass information from a parent to a child, we need to pass it through the chi
 
 When there is a change in an element in React, ONLY THE RENDER METHOD IS CALLED, NOT THE CONSTRUCTOR !
 
-ORDRE : The setState callback finishes before the end of the render function.
+ORDER : The setState callback finishes before the end of the render function, but when setState is called, render is automatically called.
 
-For next time : 
-    this.vertical_bars = this.createVerticalBars()
-    this.frame = this.createFrame()
-Ces deux lignes dans le render de Frame.js empêchent les shuffle
+My main mistake was to put multiple variables in setState which is not needed : it is better to have only one in order to reduce the number of times
+the render method is called through setState !!!
