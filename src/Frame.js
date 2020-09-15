@@ -72,10 +72,6 @@ class Frame extends React.Component {
 
     createFrame(){
         var frame =  <Grid fluid style={this.style}>
-                        {/* <DropdownButton as={ButtonGroup} title="Dropdown" id="bg-nested-dropdown">
-                            <Dropdown.Item onClick={() => this.sortFrame('BubbleSort')}>Bubble sort</Dropdown.Item>
-                            <Dropdown.Item onClick={() => this.sortFrame('MergeSort')}>Merge sort</Dropdown.Item>
-                        </DropdownButton> */}
                         <Row style={{margin:"1cm"}}>
                             {this.vertical_bars}
                         </Row>
@@ -91,10 +87,6 @@ class Frame extends React.Component {
         var frame = null
         if(new_vertical_bars === null){
             frame =  <Grid fluid fluid style={this.style}>
-            {/* <DropdownButton as={ButtonGroup} title="Dropdown" id="bg-nested-dropdown">
-                <Dropdown.Item onClick={() => this.sortFrame('BubbleSort')}>Bubble sort</Dropdown.Item>
-                <Dropdown.Item onClick={() => this.sortFrame('MergeSort')}>Merge sort</Dropdown.Item>
-            </DropdownButton> */}
             <Row style={{margin:"1cm"}}>
                 {this.vertical_bars}
             </Row>
@@ -102,10 +94,6 @@ class Frame extends React.Component {
         }
         else{
             frame =  <Grid fluid fluid style={this.style}>
-            {/* <DropdownButton as={ButtonGroup} title="Dropdown" id="bg-nested-dropdown">
-                <Dropdown.Item onClick={() => this.sortFrame('BubbleSort')}>Bubble sort</Dropdown.Item>
-                <Dropdown.Item onClick={() => this.sortFrame('MergeSort')}>Merge sort</Dropdown.Item>
-            </DropdownButton> */}
             <Row style={{margin:"1cm"}}>
                 {new_vertical_bars}
             </Row>
@@ -134,10 +122,8 @@ class Frame extends React.Component {
     
 
     shuffleFrame(){
-        console.log("this.vertical_bars shuffleFrame BEFORE : ", this.vertical_bars)
         var frame = this.state.frame
         var vertical_bars = this.vertical_bars.slice()
-        console.log("this.vertical_bars.slice() shuffleFrame BEFORE : ", this.vertical_bars.slice())
         var length_array_vertical_bars = vertical_bars.length
         var currentIndex = length_array_vertical_bars, temporaryValue, randomIndex;
 
@@ -159,7 +145,6 @@ class Frame extends React.Component {
         }
         this.vertical_bars = this.createVerticalBars(vertical_bars)
         this.modifyFrame()
-        console.log("this.vertical_bars shuffleFrame AFTER : ", this.vertical_bars)
         console.log("Finished shuffling frame.")
       
     }
@@ -180,64 +165,93 @@ class Frame extends React.Component {
       }
       //https://blog.praveen.science/right-way-of-delaying-execution-synchronously-in-javascript-without-using-loops-or-timeouts/
       
+
+    async merge(left, right, left_limit, right_limit, vertical_bars, vertical_bars_refs, buffer, buffer_refs){
+        let index = left;
+        let intial_left = left
+        let initial_right = right
+        console.log("vertical_bars_refs : ", vertical_bars_refs)
+        
+        //Compare the two sub arrays and merge them in the sorted order
+        while (left < left_limit && right < right_limit) {
+            for(let i = intial_left; i < initial_right + 1; i++){
+                vertical_bars_refs[i].current.setBackgroundColor('orange')
+            }
+            await this.delay(1000)
+            
+
+            if (vertical_bars[left].props.children.props.value <= vertical_bars[right].props.children.props.value) {
+                buffer[index] = vertical_bars[left];
+                buffer_refs[index++] = vertical_bars_refs[left++];
+            } else {
+                buffer[index] = vertical_bars[right];
+                buffer_refs[index++] = vertical_bars_refs[right++];
+            }
+
+            for(let i = intial_left; i < initial_right + 1; i++){
+                vertical_bars_refs[i].current.setBackgroundColor('green')
+            }
+            await this.delay(1000)
+        }
       
+        //If there are elements in the left sub arrray then add it to the result
+        while (left < left_limit) {
+            vertical_bars_refs[index].current.setBackgroundColor('blue')
+            await this.delay(1000)
+            vertical_bars_refs[index].current.setBackgroundColor('green')
+            await this.delay(1000)
+          buffer[index] = vertical_bars[left];
+          buffer_refs[index++] = vertical_bars_refs[left++];
+        }
+      
+        //If there are elements in the right sub array then add it to the result
+        while (right < right_limit) {
+            vertical_bars_refs[index].current.setBackgroundColor('blue')
+            await this.delay(1000)
+            vertical_bars_refs[index].current.setBackgroundColor('green')
+            await this.delay(1000)
+            buffer[index] = vertical_bars[right];
+            buffer_refs[index++] = vertical_bars_refs[right++];
+        }
+      }
+
+
     async mergeSort(){
         console.log("User chose Merge sorting algorithm.")
-        
-        var frame = this.state.frame
         var vertical_bars = this.vertical_bars.slice()
+        var vertical_bars_refs = this.refsVerticalBars.slice()
         var length_array_vertical_bars = vertical_bars.length
-        // console.log("length_array_vertical_bars : ", length_array_vertical_bars)
+        var buffer = new Array(length_array_vertical_bars)
+        var buffer_refs = new Array(length_array_vertical_bars)
         
-        for(let length_sub_array = 2; length_sub_array < length_array_vertical_bars * 2; length_sub_array *= 2){
-            var nb_sub_arrays = Math.floor(length_array_vertical_bars / length_sub_array)
-            // console.log("nb_sub_arrays : ", nb_sub_arrays)
-            for(let index_sub_array = 0; index_sub_array < nb_sub_arrays; index_sub_array++){
-                for(let current_index_in_sub_array = index_sub_array * length_sub_array; current_index_in_sub_array < (index_sub_array + 1) * length_sub_array; current_index_in_sub_array++){
-                    this.refsVerticalBars[current_index_in_sub_array].current.setBackgroundColor('orange')
-                    
-                    var current_vertical_bar = vertical_bars[current_index_in_sub_array]
-                    var current_value_vertical_bar = current_vertical_bar.props.children.props.value
-                    await this.delay(1000)
-                    for(let compare_index_in_sub_array = current_index_in_sub_array + 1; compare_index_in_sub_array < (index_sub_array + 1) * length_sub_array; compare_index_in_sub_array++){
-                        // console.log("(index_sub_array + 1) * length_sub_array : ", (index_sub_array + 1) * length_sub_array)
-                        // console.log("current_index_in_sub_array : ", current_index_in_sub_array)
-                        // console.log("compare_index_in_sub_array : ", compare_index_in_sub_array)
-                        var compare_vertical_bar = vertical_bars[compare_index_in_sub_array]
-                        var compare_value_vertical_bar = compare_vertical_bar.props.children.props.value
-        
-                        if (current_value_vertical_bar > compare_value_vertical_bar){
-                            this.refsVerticalBars[current_index_in_sub_array].current.setBackgroundColor('red')
-                            this.refsVerticalBars[compare_index_in_sub_array].current.setBackgroundColor('red')
-                            await this.delay(1000)
-                            
-                            var tmp_vertical_bar = current_vertical_bar
-                            vertical_bars[current_index_in_sub_array] = compare_vertical_bar
-                            vertical_bars[compare_index_in_sub_array] = tmp_vertical_bar
+        for (let size_sub_arrays = 1; size_sub_arrays < length_array_vertical_bars; size_sub_arrays *= 2) {
+          for (let left_start = 0; left_start < length_array_vertical_bars; left_start += 2*size_sub_arrays) {
+            
+            //Get the two sub arrays
+            let left = left_start,
+                right = Math.min(left + size_sub_arrays, length_array_vertical_bars),
+                left_limit = right,
+                right_limit = Math.min(right + size_sub_arrays, length_array_vertical_bars);
+            
+            //Merge the sub arrays
+            await this.merge(left, right, left_limit, right_limit, vertical_bars, vertical_bars_refs, buffer, buffer_refs);  
+          }
+          
+          //Swap the sorted sub array and merge them
+          let temp = vertical_bars;
+          vertical_bars = buffer;
+          buffer = temp;
 
-                            var tmp_refVerticalBar = this.refsVerticalBars[current_index_in_sub_array]
-                            this.refsVerticalBars[current_index_in_sub_array] = this.refsVerticalBars[compare_index_in_sub_array]
-                            this.refsVerticalBars[compare_index_in_sub_array] = tmp_refVerticalBar
-        
-                            
-                            this.modifyFrame(vertical_bars)
-                            await this.delay(1000)
-                            this.refsVerticalBars[current_index_in_sub_array].current.setBackgroundColor('green')
-                            this.refsVerticalBars[compare_index_in_sub_array].current.setBackgroundColor('green')
-                            await this.delay(1000)
-                            current_vertical_bar = vertical_bars[current_index_in_sub_array]
-                            current_value_vertical_bar = current_vertical_bar.props.children.props.value
-                            console.log("Vertical bars swapped")
-                        }
-                    }
-                    this.refsVerticalBars[current_index_in_sub_array].current.setBackgroundColor('green')
-                }
-            }
+          let temp_refs = vertical_bars_refs;
+          vertical_bars_refs = buffer_refs;
+          buffer_refs = temp_refs;
+          this.modifyArrayVerticalBars(vertical_bars)
+          this.modifyFrame(vertical_bars)
         }
-        return vertical_bars
-    }
+        return vertical_bars;
+      }
 
-
+     
     async bubbleSort(){
         console.log("User chose Bubble sorting algorithm.")
         var vertical_bars = this.vertical_bars.slice()
@@ -302,7 +316,7 @@ class Frame extends React.Component {
               this.bubbleSort()
             }}>Bubble sort</Button>
             <Button variant="secondary" onClick={(event) => {
-                this.mergeSort(this.vertical_bars)
+                this.mergeSort()
             }}>Merge sort</Button>
           </ButtonGroup>
           <hr></hr>

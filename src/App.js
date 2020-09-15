@@ -14,7 +14,7 @@ class App extends React.Component {
   constructor(props) {
     super(props)
 
-    this.initial_nb_vertical_bars = 1
+    this.initial_nb_vertical_bars = 5
     this.state = {
       nb_vertical_bars : this.initial_nb_vertical_bars,
       speed : this.props.speed
