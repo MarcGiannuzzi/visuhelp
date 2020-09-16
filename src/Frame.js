@@ -316,6 +316,8 @@ class Frame extends React.Component {
                     let tmp_vertical_bar = vertical_bars[smallest_index]
                     vertical_bars[smallest_index] = vertical_bars[current_index]
                     vertical_bars[current_index] = tmp_vertical_bar
+                    await this.delay(1000)
+
                     
                     this.createVerticalBars(vertical_bars)
                     this.modifyFrame(vertical_bars)
@@ -331,31 +333,27 @@ class Frame extends React.Component {
 
             }
             this.refsVerticalBars[current_index].current.setBackgroundColor('green')
-            this.refsVerticalBars[end_index].current.setBackgroundColor('green')
             await this.delay(1000)
         }
-
-        this.refsVerticalBars[smallest_index + 1].current.setBackgroundColor('red')
-        this.refsVerticalBars[end_index].current.setBackgroundColor('red')
-        await this.delay(1000)
-
-        let tmp_vertical_bar = vertical_bars[smallest_index + 1]
-        vertical_bars[smallest_index + 1] = vertical_bars[end_index]
-        vertical_bars[end_index] = tmp_vertical_bar
-
-        this.createVerticalBars(vertical_bars)
-        this.modifyFrame(vertical_bars)
-
-        var tmp_refVerticalBar = this.refsVerticalBars[smallest_index + 1]
-        this.refsVerticalBars[smallest_index + 1] = this.refsVerticalBars[end_index]
-        this.refsVerticalBars[end_index] = tmp_refVerticalBar
-
-        this.refsVerticalBars[smallest_index + 1].current.setBackgroundColor('green')
+        if(smallest_index + 1 != end_index){
+            this.refsVerticalBars[smallest_index + 1].current.setBackgroundColor('red')
+            await this.delay(1000)
+    
+            let tmp_vertical_bar = vertical_bars[smallest_index + 1]
+            vertical_bars[smallest_index + 1] = vertical_bars[end_index]
+            vertical_bars[end_index] = tmp_vertical_bar
+            await this.delay(1000)
+    
+            this.createVerticalBars(vertical_bars)
+            this.modifyFrame(vertical_bars)
+    
+            var tmp_refVerticalBar = this.refsVerticalBars[smallest_index + 1]
+            this.refsVerticalBars[smallest_index + 1] = this.refsVerticalBars[end_index]
+            this.refsVerticalBars[end_index] = tmp_refVerticalBar
+    
+            this.refsVerticalBars[smallest_index + 1].current.setBackgroundColor('green')
+        }
         this.refsVerticalBars[end_index].current.setBackgroundColor('green')
-        await this.delay(1000)
-
-
-
         return smallest_index + 1
     }
 
@@ -399,7 +397,8 @@ class Frame extends React.Component {
             }
         }
 
-        this.refsVerticalBars = this.createVerticalBarsRefs(this.nb_vertical_bars)
+        // this.refsVerticalBars = this.createVerticalBarsRefs(this.nb_vertical_bars)
+        // this.vertical_bars = this.createVerticalBars()
         console.log("this.refsVerticalBars FIN FONCTION", this.refsVerticalBars)
     }
 
