@@ -6,6 +6,7 @@ import './index.css';
 import logo from './data.svg';
 
 import Navbar from 'react-bootstrap/Navbar';
+import ToggleButton from 'react-bootstrap/ToggleButton';
 import Nav from 'react-bootstrap/Nav';
 import Form from 'react-bootstrap/Form';
 import FormControl from 'react-bootstrap/FormControl';
@@ -44,6 +45,26 @@ ReactDOM.render(
     <p>
       Welcome in VisuHelp
     </p>
+    <Button
+          id="backgroundColorChangeButton"
+          type="checkbox"
+          variant="secondary"
+          onClick={(event) => {
+            if(document.body.style.backgroundColor == 'white'){
+              event.target.innerHTML = 'White Mode'
+              // event.target = 'White Mode'
+              document.body.style.backgroundColor = '#282c34'
+              document.body.style.color = 'white'
+            }
+            else{
+              event.target.innerHTML = 'Dark Mode'
+              document.body.style.backgroundColor = 'white'
+              document.body.style.color = 'black'
+            }
+          }}
+        >
+          Light Mode
+        </Button>
     <br></br>
     <br></br>
     <br></br>

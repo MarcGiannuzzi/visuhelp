@@ -21,7 +21,7 @@ class Frame extends React.Component {
             width: "95%"
         }
         this.nb_vertical_bars = this.props.nb_vertical_bars
-        this.refsVerticalBars = this.createVerticalBarsRefs()
+        this.refsVerticalBars = this.createVerticalBarsRefs(this.nb_vertical_bars)
         this.vertical_bars = this.createVerticalBars()
         // console.log(this.vertical_bars)
         this.frame = this.createFrame()
@@ -35,24 +35,23 @@ class Frame extends React.Component {
         this.createVerticalBars = this.createVerticalBars.bind(this);
         this.createFrame = this.createFrame.bind(this);
         this.modifyFrame = this.modifyFrame.bind(this);
-        this.modifyArrayVerticalBars = this.modifyArrayVerticalBars.bind(this);
         this.bubbleSort = this.bubbleSort.bind(this);
         this.mergeSort = this.mergeSort.bind(this);
-
+        this.quickSort = this.quickSort.bind(this);
     }
 
     componentWillReceiveProps({nb_vertical_bars}) {
         this.nb_vertical_bars = nb_vertical_bars
-        this.refsVerticalBars = this.createVerticalBarsRefs()
+        this.refsVerticalBars = this.createVerticalBarsRefs(nb_vertical_bars)
         this.vertical_bars = this.createVerticalBars()
         this.modifyFrame()
     }
 
-    createVerticalBarsRefs(){
+    createVerticalBarsRefs(nb_vertical_bars){
         var refsVerticalBars = []
-        for(let i = 0; i < this.nb_vertical_bars; i++){
+        for(let i = 0; i < nb_vertical_bars; i++){
             var ref = React.createRef()
-            console.log("ref : ", React.createRef())
+            console.log("ref : ", ref)
             refsVerticalBars.push(ref)
         }
         return refsVerticalBars
@@ -108,17 +107,7 @@ class Frame extends React.Component {
     }
 
 
-    modifyArrayVerticalBars(new_vertical_bars){
-        var updated_vertical_bars = new_vertical_bars.map((vertical_bar, index) => {
-            var new_value_vertical_bar = vertical_bar.props.children.props.value
-            return <Col key={new_value_vertical_bar} style={{flexBasis:"0", margin:"auto"}} xs={1} md={1} ><VerticalBar ref={this.refsVerticalBars[index]} value={new_value_vertical_bar} ></VerticalBar></Col>
-        })
-        this.setState((state) => {
-            return {vertical_bars:updated_vertical_bars}
-        })
-        return updated_vertical_bars
 
-    }
     
 
     shuffleFrame(){
@@ -245,10 +234,10 @@ class Frame extends React.Component {
           let temp_refs = vertical_bars_refs;
           vertical_bars_refs = buffer_refs;
           buffer_refs = temp_refs;
-          this.modifyArrayVerticalBars(vertical_bars)
+          this.createVerticalBars(vertical_bars)
           this.modifyFrame(vertical_bars)
         }
-        return vertical_bars;
+        this.refsVerticalBars = this.createVerticalBarsRefs(this.nb_vertical_bars)
       }
 
      
@@ -262,7 +251,6 @@ class Frame extends React.Component {
             this.refsVerticalBars[current_index].current.setBackgroundColor('orange')
             await this.delay(1000)
             var current_vertical_bar = vertical_bars[current_index]
-            console.log("current_vertical_bar : ", current_vertical_bar)
             var current_value_vertical_bar = current_vertical_bar.props.children.props.value
             for(let compare_index = current_index + 1; compare_index < length_array_vertical_bars; compare_index++){
                 var compare_vertical_bar = vertical_bars[compare_index]
@@ -273,7 +261,7 @@ class Frame extends React.Component {
                     this.refsVerticalBars[current_index].current.setBackgroundColor('red')
                     this.refsVerticalBars[compare_index].current.setBackgroundColor('red')
 
-                    this.modifyArrayVerticalBars(vertical_bars)
+                    this.createVerticalBars(vertical_bars)
                     await this.delay(1000)
                     
                     var tmp_vertical_bar = current_vertical_bar
@@ -297,11 +285,122 @@ class Frame extends React.Component {
             }
             this.refsVerticalBars[current_index].current.setBackgroundColor('green')
         }
+        this.refsVerticalBars = this.createVerticalBarsRefs(this.nb_vertical_bars)
+    }
 
 
-    
+    async partition(vertical_bars, start_index, end_index){
+        console.log("CHANGEMENT PIVOT")
+        console.log("start_index : ", start_index)
+        console.log("end_index : ", end_index)
+        var smallest_index = start_index - 1
+        var pivot = vertical_bars[end_index].props.children.props.value
+        this.refsVerticalBars[end_index].current.setBackgroundColor('blue')
+        await this.delay(1000)
 
-        
+
+        for(let current_index = start_index; current_index < end_index; current_index++){
+            this.refsVerticalBars[current_index].current.setBackgroundColor('orange')
+            await this.delay(1000)
+            if(vertical_bars[current_index].props.children.props.value < pivot){
+                smallest_index += 1
+
+                console.log("smallest_index : ", smallest_index)
+                console.log("current_index : ", current_index)
+                
+                if(smallest_index != current_index){
+                    this.refsVerticalBars[current_index].current.setBackgroundColor('red')
+                    this.refsVerticalBars[smallest_index].current.setBackgroundColor('red')
+                    await this.delay(1000)
+
+                    let tmp_vertical_bar = vertical_bars[smallest_index]
+                    vertical_bars[smallest_index] = vertical_bars[current_index]
+                    vertical_bars[current_index] = tmp_vertical_bar
+                    
+                    this.createVerticalBars(vertical_bars)
+                    this.modifyFrame(vertical_bars)
+
+                    let tmp_refVerticalBar = this.refsVerticalBars[smallest_index]
+                    this.refsVerticalBars[smallest_index] = this.refsVerticalBars[current_index]
+                    this.refsVerticalBars[current_index] = tmp_refVerticalBar
+
+                    this.refsVerticalBars[current_index].current.setBackgroundColor('green')
+                    this.refsVerticalBars[smallest_index].current.setBackgroundColor('green')
+                    await this.delay(1000)
+            }
+
+            }
+            this.refsVerticalBars[current_index].current.setBackgroundColor('green')
+            this.refsVerticalBars[end_index].current.setBackgroundColor('green')
+            await this.delay(1000)
+        }
+
+        this.refsVerticalBars[smallest_index + 1].current.setBackgroundColor('red')
+        this.refsVerticalBars[end_index].current.setBackgroundColor('red')
+        await this.delay(1000)
+
+        let tmp_vertical_bar = vertical_bars[smallest_index + 1]
+        vertical_bars[smallest_index + 1] = vertical_bars[end_index]
+        vertical_bars[end_index] = tmp_vertical_bar
+
+        this.createVerticalBars(vertical_bars)
+        this.modifyFrame(vertical_bars)
+
+        var tmp_refVerticalBar = this.refsVerticalBars[smallest_index + 1]
+        this.refsVerticalBars[smallest_index + 1] = this.refsVerticalBars[end_index]
+        this.refsVerticalBars[end_index] = tmp_refVerticalBar
+
+        this.refsVerticalBars[smallest_index + 1].current.setBackgroundColor('green')
+        this.refsVerticalBars[end_index].current.setBackgroundColor('green')
+        await this.delay(1000)
+
+
+
+        return smallest_index + 1
+    }
+
+
+    async quickSort(){
+        console.log("this.refsVerticalBars DEBUT FONCTION", this.refsVerticalBars)
+        console.log("User chose Quick sorting algorithm.")
+        var vertical_bars = this.vertical_bars.slice()
+        var start_index = 0
+        var size = vertical_bars.length
+        var end_index = size - 1
+        var stack = Array(size)
+
+        var top_of_stack =  -1
+
+        top_of_stack += 1
+        stack[top_of_stack] = start_index
+        top_of_stack += 1
+        stack[top_of_stack] = end_index
+
+        while(top_of_stack >= 0){
+            end_index = stack[top_of_stack]
+            top_of_stack -= 1
+            start_index = stack[top_of_stack]
+            top_of_stack -= 1
+
+            var p = await this.partition(vertical_bars, start_index, end_index)
+
+            if(p - 1 > start_index){
+                top_of_stack += 1
+                stack[top_of_stack] = start_index
+                top_of_stack += 1
+                stack[top_of_stack] = p - 1
+            }
+
+            if(p + 1 < end_index){
+                top_of_stack += 1
+                stack[top_of_stack] = p + 1
+                top_of_stack += 1
+                stack[top_of_stack] = end_index
+            }
+        }
+
+        this.refsVerticalBars = this.createVerticalBarsRefs(this.nb_vertical_bars)
+        console.log("this.refsVerticalBars FIN FONCTION", this.refsVerticalBars)
     }
 
 
@@ -317,6 +416,9 @@ class Frame extends React.Component {
             }}>Bubble sort</Button>
             <Button variant="secondary" onClick={(event) => {
                 this.mergeSort()
+            }}>Merge sort</Button>
+            <Button variant="secondary" onClick={(event) => {
+                this.quickSort()
             }}>Merge sort</Button>
           </ButtonGroup>
           <hr></hr>

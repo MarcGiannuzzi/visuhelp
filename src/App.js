@@ -47,7 +47,7 @@ class App extends React.Component {
      <div className="App">
       <header className="App-header">
       {/* Thanks https://www.flaticon.com/authors/kiranshastry */}
-        <Frame nb_vertical_bars={parseInt(this.state.nb_vertical_bars)}></Frame>
+        <Frame  nb_vertical_bars={parseInt(this.state.nb_vertical_bars)}></Frame>
       </header>
     </div>
 </div>
