@@ -41,7 +41,7 @@ ReactDOM.render(
 
 ReactDOM.render(
   <React.StrictMode>
-    <img src={logo} className="App-logo" alt="logo" /> 
+    <img style={{height:"4cm"}} src={logo} className="App-logo" alt="logo" /> 
     <p>
       Welcome in VisuHelp
     </p>

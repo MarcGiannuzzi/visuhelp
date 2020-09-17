@@ -38,6 +38,7 @@ class Frame extends React.Component {
         this.bubbleSort = this.bubbleSort.bind(this);
         this.mergeSort = this.mergeSort.bind(this);
         this.quickSort = this.quickSort.bind(this);
+        this.insertionSort = this.insertionSort.bind(this);
     }
 
     componentWillReceiveProps({nb_vertical_bars}) {
@@ -237,7 +238,6 @@ class Frame extends React.Component {
           this.createVerticalBars(vertical_bars)
           this.modifyFrame(vertical_bars)
         }
-        this.refsVerticalBars = this.createVerticalBarsRefs(this.nb_vertical_bars)
       }
 
      
@@ -285,7 +285,6 @@ class Frame extends React.Component {
             }
             this.refsVerticalBars[current_index].current.setBackgroundColor('green')
         }
-        this.refsVerticalBars = this.createVerticalBarsRefs(this.nb_vertical_bars)
     }
 
 
@@ -319,7 +318,7 @@ class Frame extends React.Component {
                     await this.delay(1000)
 
                     
-                    this.createVerticalBars(vertical_bars)
+                    // this.createVerticalBars(vertical_bars)
                     this.modifyFrame(vertical_bars)
 
                     let tmp_refVerticalBar = this.refsVerticalBars[smallest_index]
@@ -344,7 +343,7 @@ class Frame extends React.Component {
             vertical_bars[end_index] = tmp_vertical_bar
             await this.delay(1000)
     
-            this.createVerticalBars(vertical_bars)
+            // this.createVerticalBars(vertical_bars)
             this.modifyFrame(vertical_bars)
     
             var tmp_refVerticalBar = this.refsVerticalBars[smallest_index + 1]
@@ -397,11 +396,50 @@ class Frame extends React.Component {
             }
         }
 
-        // this.refsVerticalBars = this.createVerticalBarsRefs(this.nb_vertical_bars)
-        // this.vertical_bars = this.createVerticalBars()
-        console.log("this.refsVerticalBars FIN FONCTION", this.refsVerticalBars)
+        this.refsVerticalBars = this.createVerticalBarsRefs(this.nb_vertical_bars)
+        this.vertical_bars = this.createVerticalBars()
     }
 
+
+
+    async insertionSort() {
+        var vertical_bars = this.vertical_bars.slice()
+            for (let current_index = 1; current_index < vertical_bars.length; current_index++) {
+                var compare_index = current_index; 
+                var compare_vertical_bar_value = vertical_bars[compare_index].props.children.props.value
+                var before_compare_vertical_bar_value = vertical_bars[compare_index - 1].props.children.props.value
+
+                while (compare_index > 0 && compare_vertical_bar_value < before_compare_vertical_bar_value) {
+                    this.refsVerticalBars[compare_index - 1].current.setBackgroundColor('red')
+                    this.refsVerticalBars[compare_index].current.setBackgroundColor('red')
+                    await this.delay(1000)
+
+                    var tmp_vertical_bar = vertical_bars[compare_index]
+                    vertical_bars[compare_index] = vertical_bars[compare_index - 1]
+                    vertical_bars[compare_index - 1] = tmp_vertical_bar
+
+                    var tmp_ref_vertical_bar = this.refsVerticalBars[compare_index]  
+                    this.refsVerticalBars[compare_index] = this.refsVerticalBars[compare_index - 1]   
+                    this.refsVerticalBars[compare_index - 1] =  tmp_ref_vertical_bar
+
+                    this.modifyFrame(vertical_bars)
+                    await this.delay(1000)
+
+                    
+                    this.refsVerticalBars[compare_index - 1].current.setBackgroundColor('green')
+                    this.refsVerticalBars[compare_index].current.setBackgroundColor('green')
+                    await this.delay(1000)
+                                
+                    compare_index -= 1
+                    if(compare_index > 0){
+                        compare_vertical_bar_value = vertical_bars[compare_index].props.children.props.value
+                        before_compare_vertical_bar_value = vertical_bars[compare_index - 1].props.children.props.value
+                    }
+                }
+
+            }
+        this.refsVerticalBars = this.createVerticalBarsRefs(this.nb_vertical_bars)
+        this.vertical_bars = this.createVerticalBars()    }
 
     render() {
         var element_returned = <div>
@@ -418,8 +456,12 @@ class Frame extends React.Component {
             }}>Merge sort</Button>
             <Button variant="secondary" onClick={(event) => {
                 this.quickSort()
-            }}>Merge sort</Button>
+            }}>Quick sort</Button>
+            <Button variant="secondary" onClick={(event) => {
+                this.insertionSort()
+            }}>Insertion sort</Button>
           </ButtonGroup>
+          
           <hr></hr>
           
           {this.state.frame}
