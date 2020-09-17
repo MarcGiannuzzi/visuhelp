@@ -20,10 +20,8 @@ import * as serviceWorker from './serviceWorker';
 
 
 var navbar = <Navbar bg="dark" variant="dark">
-  {/* <Navbar.Brand href="#home">Ginzzi</Navbar.Brand> */}
     <Nav className="mr-auto">
       <Nav.Link href="#home">Sorting algorithms</Nav.Link>
-      {/* <Nav.Link href="#features">Data science</Nav.Link> */}
     </Nav>
     <Form inline>
       <FormControl type="text" placeholder="Search" className="mr-sm-2" />
@@ -73,20 +71,6 @@ ReactDOM.render(
 );
 
 
-// ReactDOM.render(
-//   <React.StrictMode>
-//     <span style={{fontSize:"15px"}}>Number of vertical bars : </span>
-//     <input defaultValue="5" style={{fontSize:"15px", width:"2cm"}} id="id_input_nb_bars" onChange={() => {
-//       ReactDOM.render(
-//         <React.StrictMode>
-//           <App/>
-//         </React.StrictMode>,
-//         document.getElementById('app')
-//       );
-//     }}/>
-//   </React.StrictMode>,
-//   document.getElementById('params')
-// );
 
 
 ReactDOM.render(

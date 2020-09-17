@@ -21,11 +21,10 @@ class Frame extends React.Component {
             width: "95%"
         }
         this.nb_vertical_bars = this.props.nb_vertical_bars
+        this.speed = this.props.speed
         this.refsVerticalBars = this.createVerticalBarsRefs(this.nb_vertical_bars)
         this.vertical_bars = this.createVerticalBars()
-        // console.log(this.vertical_bars)
         this.frame = this.createFrame()
-        // console.log(this.frame)
         
         this.state = {
             frame: this.frame, 
@@ -41,8 +40,9 @@ class Frame extends React.Component {
         this.insertionSort = this.insertionSort.bind(this);
     }
 
-    componentWillReceiveProps({nb_vertical_bars}) {
+    componentWillReceiveProps({nb_vertical_bars, speed}) {
         this.nb_vertical_bars = nb_vertical_bars
+        this.speed = speed
         this.refsVerticalBars = this.createVerticalBarsRefs(nb_vertical_bars)
         this.vertical_bars = this.createVerticalBars()
         this.modifyFrame()
@@ -167,7 +167,7 @@ class Frame extends React.Component {
             for(let i = intial_left; i < initial_right + 1; i++){
                 vertical_bars_refs[i].current.setBackgroundColor('orange')
             }
-            await this.delay(1000)
+            await this.delay(this.speed)
             
 
             if (vertical_bars[left].props.children.props.value <= vertical_bars[right].props.children.props.value) {
@@ -181,15 +181,15 @@ class Frame extends React.Component {
             for(let i = intial_left; i < initial_right + 1; i++){
                 vertical_bars_refs[i].current.setBackgroundColor('green')
             }
-            await this.delay(1000)
+            await this.delay(this.speed)
         }
       
         //If there are elements in the left sub arrray then add it to the result
         while (left < left_limit) {
             vertical_bars_refs[index].current.setBackgroundColor('blue')
-            await this.delay(1000)
+            await this.delay(this.speed)
             vertical_bars_refs[index].current.setBackgroundColor('green')
-            await this.delay(1000)
+            await this.delay(this.speed)
           buffer[index] = vertical_bars[left];
           buffer_refs[index++] = vertical_bars_refs[left++];
         }
@@ -197,9 +197,9 @@ class Frame extends React.Component {
         //If there are elements in the right sub array then add it to the result
         while (right < right_limit) {
             vertical_bars_refs[index].current.setBackgroundColor('blue')
-            await this.delay(1000)
+            await this.delay(this.speed)
             vertical_bars_refs[index].current.setBackgroundColor('green')
-            await this.delay(1000)
+            await this.delay(this.speed)
             buffer[index] = vertical_bars[right];
             buffer_refs[index++] = vertical_bars_refs[right++];
         }
@@ -249,7 +249,7 @@ class Frame extends React.Component {
 
         for(let current_index = 0; current_index < length_array_vertical_bars - 1; current_index++){
             this.refsVerticalBars[current_index].current.setBackgroundColor('orange')
-            await this.delay(1000)
+            await this.delay(this.speed)
             var current_vertical_bar = vertical_bars[current_index]
             var current_value_vertical_bar = current_vertical_bar.props.children.props.value
             for(let compare_index = current_index + 1; compare_index < length_array_vertical_bars; compare_index++){
@@ -262,7 +262,7 @@ class Frame extends React.Component {
                     this.refsVerticalBars[compare_index].current.setBackgroundColor('red')
 
                     this.createVerticalBars(vertical_bars)
-                    await this.delay(1000)
+                    await this.delay(this.speed)
                     
                     var tmp_vertical_bar = current_vertical_bar
                     vertical_bars[current_index] = compare_vertical_bar
@@ -274,10 +274,10 @@ class Frame extends React.Component {
 
                     
                     this.modifyFrame(vertical_bars)
-                    await this.delay(1000)
+                    await this.delay(this.speed)
                     this.refsVerticalBars[current_index].current.setBackgroundColor('green')
                     this.refsVerticalBars[compare_index].current.setBackgroundColor('green')
-                    await this.delay(1000)
+                    await this.delay(this.speed)
                     current_vertical_bar = vertical_bars[current_index]
                     current_value_vertical_bar = current_vertical_bar.props.children.props.value
                     console.log("Vertical bars swapped")
@@ -295,12 +295,12 @@ class Frame extends React.Component {
         var smallest_index = start_index - 1
         var pivot = vertical_bars[end_index].props.children.props.value
         this.refsVerticalBars[end_index].current.setBackgroundColor('blue')
-        await this.delay(1000)
+        await this.delay(this.speed)
 
 
         for(let current_index = start_index; current_index < end_index; current_index++){
             this.refsVerticalBars[current_index].current.setBackgroundColor('orange')
-            await this.delay(1000)
+            await this.delay(this.speed)
             if(vertical_bars[current_index].props.children.props.value < pivot){
                 smallest_index += 1
 
@@ -310,12 +310,12 @@ class Frame extends React.Component {
                 if(smallest_index != current_index){
                     this.refsVerticalBars[current_index].current.setBackgroundColor('red')
                     this.refsVerticalBars[smallest_index].current.setBackgroundColor('red')
-                    await this.delay(1000)
+                    await this.delay(this.speed)
 
                     let tmp_vertical_bar = vertical_bars[smallest_index]
                     vertical_bars[smallest_index] = vertical_bars[current_index]
                     vertical_bars[current_index] = tmp_vertical_bar
-                    await this.delay(1000)
+                    await this.delay(this.speed)
 
                     
                     // this.createVerticalBars(vertical_bars)
@@ -327,21 +327,21 @@ class Frame extends React.Component {
 
                     this.refsVerticalBars[current_index].current.setBackgroundColor('green')
                     this.refsVerticalBars[smallest_index].current.setBackgroundColor('green')
-                    await this.delay(1000)
+                    await this.delay(this.speed)
             }
 
             }
             this.refsVerticalBars[current_index].current.setBackgroundColor('green')
-            await this.delay(1000)
+            await this.delay(this.speed)
         }
         if(smallest_index + 1 != end_index){
             this.refsVerticalBars[smallest_index + 1].current.setBackgroundColor('red')
-            await this.delay(1000)
+            await this.delay(this.speed)
     
             let tmp_vertical_bar = vertical_bars[smallest_index + 1]
             vertical_bars[smallest_index + 1] = vertical_bars[end_index]
             vertical_bars[end_index] = tmp_vertical_bar
-            await this.delay(1000)
+            await this.delay(this.speed)
     
             // this.createVerticalBars(vertical_bars)
             this.modifyFrame(vertical_bars)
@@ -412,7 +412,7 @@ class Frame extends React.Component {
                 while (compare_index > 0 && compare_vertical_bar_value < before_compare_vertical_bar_value) {
                     this.refsVerticalBars[compare_index - 1].current.setBackgroundColor('red')
                     this.refsVerticalBars[compare_index].current.setBackgroundColor('red')
-                    await this.delay(1000)
+                    await this.delay(this.speed)
 
                     var tmp_vertical_bar = vertical_bars[compare_index]
                     vertical_bars[compare_index] = vertical_bars[compare_index - 1]
@@ -423,12 +423,12 @@ class Frame extends React.Component {
                     this.refsVerticalBars[compare_index - 1] =  tmp_ref_vertical_bar
 
                     this.modifyFrame(vertical_bars)
-                    await this.delay(1000)
+                    await this.delay(this.speed)
 
                     
                     this.refsVerticalBars[compare_index - 1].current.setBackgroundColor('green')
                     this.refsVerticalBars[compare_index].current.setBackgroundColor('green')
-                    await this.delay(1000)
+                    await this.delay(this.speed)
                                 
                     compare_index -= 1
                     if(compare_index > 0){
