@@ -41,18 +41,21 @@ class Frame extends React.Component {
     }
 
     componentWillReceiveProps({nb_vertical_bars, speed}) {
-        this.nb_vertical_bars = nb_vertical_bars
-        this.speed = speed
-        this.refsVerticalBars = this.createVerticalBarsRefs(nb_vertical_bars)
-        this.vertical_bars = this.createVerticalBars()
-        this.modifyFrame()
+        if(this.nb_vertical_bars == nb_vertical_bars){
+            this.speed = speed
+        }
+        else{
+            this.nb_vertical_bars = nb_vertical_bars
+            this.refsVerticalBars = this.createVerticalBarsRefs(nb_vertical_bars)
+            this.vertical_bars = this.createVerticalBars()
+            this.modifyFrame()
+        }
     }
 
     createVerticalBarsRefs(nb_vertical_bars){
         var refsVerticalBars = []
         for(let i = 0; i < nb_vertical_bars; i++){
             var ref = React.createRef()
-            console.log("ref : ", ref)
             refsVerticalBars.push(ref)
         }
         return refsVerticalBars
@@ -61,7 +64,7 @@ class Frame extends React.Component {
     createVerticalBars(new_vertical_bars=null){
         if(new_vertical_bars === null){
             return Array.from(Array(this.nb_vertical_bars).keys()).map(index => 
-                <Col key={index} style={{flexBasis:"0", margin:'auto'}} xs={1} md={1}><VerticalBar ref={this.refsVerticalBars[index]} value={index} ></VerticalBar></Col>)
+                <Col key={index} style={{flexBasis:"0", margin:'auto'}} xs={1} md={1}><VerticalBar ref={this.refsVerticalBars[index]} value={index} width={10 / this.nb_vertical_bars}></VerticalBar></Col>)
         }
         else{
             return new_vertical_bars
@@ -112,8 +115,13 @@ class Frame extends React.Component {
     
 
     shuffleFrame(){
-        var frame = this.state.frame
-        var vertical_bars = this.vertical_bars.slice()
+        var refsVerticalBars = this.createVerticalBarsRefs(this.nb_vertical_bars)
+        this.refsVerticalBars = refsVerticalBars
+        var vertical_bars = this.createVerticalBars()
+        this.vertical_bars = vertical_bars
+        this.modifyFrame()
+
+
         var length_array_vertical_bars = vertical_bars.length
         var currentIndex = length_array_vertical_bars, temporaryValue, randomIndex;
 
@@ -133,7 +141,6 @@ class Frame extends React.Component {
             this.refsVerticalBars[currentIndex] = this.refsVerticalBars[randomIndex]
             this.refsVerticalBars[randomIndex] = tmp_refVerticalBar
         }
-        this.vertical_bars = this.createVerticalBars(vertical_bars)
         this.modifyFrame()
         console.log("Finished shuffling frame.")
       

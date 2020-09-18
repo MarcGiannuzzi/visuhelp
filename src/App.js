@@ -4,7 +4,7 @@ import './App.css';
 import Slider from '@material-ui/core/Slider'
 import VerticalBar from './VerticalBar'
 import Frame from './Frame'
-
+import { green } from '@material-ui/core/colors';
 
 
 
@@ -14,22 +14,22 @@ class App extends React.Component {
     super(props)
 
     this.initial_nb_vertical_bars = 5
-    this.initial_speed = 50 // speed should go from 0 to 100
+    this.max_speed = - 100
+    this.min_speed = - 3000
+    this.initial_speed = - (this.max_speed + this.min_speed) / 2 // speed should go from 0 to 100
     this.state = {
       nb_vertical_bars : this.initial_nb_vertical_bars,
       speed : this.initial_speed
     }
     this.changeNumberVerticalBars = this.changeNumberVerticalBars.bind(this);
+    this.changeSpeed = this.changeSpeed.bind(this);
   }
 
 
-  changeNumberVerticalBars(event){
-    var new_nb_vertical_bars = parseInt(event.target.value)
-    console.log("new_nb_vertical_bars :", new_nb_vertical_bars)
-    console.log("event : ", event)
+  changeNumberVerticalBars(event, new_value){
     this.setState((state) => {
-      if(!isNaN(new_nb_vertical_bars)){
-        return {nb_vertical_bars:new_nb_vertical_bars}
+      if(!isNaN(new_value)){
+        return {nb_vertical_bars:new_value}
       }
       else{
         return {nb_vertical_bars:2}
@@ -41,13 +41,10 @@ class App extends React.Component {
   }
 
 
-  changeSpeed(event){
-    var new_speed = parseInt(event.target.value)
-    console.log("new_speed :", new_speed)
-    console.log("event : ", event)
+  changeSpeed(event, new_value){
     this.setState((state) => {
-      if(!isNaN(new_speed)){
-        return {speed:new_speed}
+      if(!isNaN(new_value)){
+        return {speed:- new_value}
       }
       else{
         return {speed:this.initial_speed}
@@ -60,15 +57,16 @@ class App extends React.Component {
 
   render(){
     var app = <div>
-    <span style={{fontSize:"15px"}}>Number of vertical bars : </span>
-    <input defaultValue={parseInt(this.state.nb_vertical_bars)}  id="id_input_nb_bars" onChange={this.changeNumberVerticalBars}/>
-    <br></br>
-    <span style={{fontSize:"15px"}}>Speed : <Slider min="1" max="100" type="range" id="id_input_speed" onChange={this.changeSpeed}></Slider> </span>
+      <div>
+        <span style={{fontSize:"15px"}}>Number of vertical bars : <Slider defaultValue={parseInt(this.state.nb_vertical_bars)} min={3} max={10} id="id_input_nb_bars" type="range" step={1} onChange={this.changeNumberVerticalBars}></Slider> </span>
+        <br></br>
+        <span style={{fontSize:"15px"}}>Speed :<Slider defaultValue={- this.initial_speed} min={this.min_speed} max={this.max_speed} id="id_input_speed" type="range" onChange={this.changeSpeed}></Slider></span>
+      </div>
     
      <div className="App">
       <header className="App-header">
       {/* Thanks https://www.flaticon.com/authors/kiranshastry */}
-        <Frame speed={parseInt(300 + 7 * this.state.speed)} nb_vertical_bars={parseInt(this.state.nb_vertical_bars)}></Frame>
+        <Frame speed={parseInt(this.state.speed)} nb_vertical_bars={parseInt(this.state.nb_vertical_bars)}></Frame>
       </header>
     </div>
 </div>

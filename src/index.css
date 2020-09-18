@@ -23,15 +23,15 @@ code {
 
 
 #id_input_nb_bars{
-  border-radius: 25px;
-  background: green;
-  width: 2cm;
+  width: 4cm;
   font-size: 15px;
+  color: green;
 }
 
 #id_input_speed{
   border-radius: 25px;
-  width: 2cm;
+  width: 4cm;
   font-size:15px;
   color:green;
 }
+
