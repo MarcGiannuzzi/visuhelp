@@ -12,7 +12,7 @@ class VerticalBar extends React.Component {
           width: "0.8cm",
           fontSize: "0.5cm",
           height: "" + (this.props.value + 1) + "cm", 
-          border: "0.1cm solid white",
+          border: "0.1cm solid black",
           borderRadius: "5px",
           backgroundColor:"green",
           color: "#fff4d1", 
@@ -20,7 +20,6 @@ class VerticalBar extends React.Component {
           padding:"auto" ,
           margin:"auto",
           marginBottom:"1cm",
-          borderColor:"black"
         }
 
         this.state = {style: this.vertical_bar_style};
@@ -33,24 +32,20 @@ class VerticalBar extends React.Component {
 
     setBackgroundColor = (color) => {
       var new_style = {
-        height: "" + (this.props.value + 1) + "cm", 
         width: "0.8cm",
-        border: "0.1cm solid white",
+        fontSize: "0.5cm",
+        height: "" + (this.props.value + 1) + "cm", 
+        border: "0.1cm solid black",
         borderRadius: "5px",
         backgroundColor:color,
-        color: "white", 
+        color: "#fff4d1", 
         textAlign: "center", 
         padding:"auto" ,
-        margin:"auto"
+        margin:"auto",
+        marginBottom:"1cm",
       }
       this.setState({style : new_style}) 
     }
-    
-    // Avec les refs, cette declaration ne marchait pas  ! : setBackgroundColor(color){
-    //   var new_style = this.vertical_bar_style
-    //   new_style['backgroundColor'] = color
-    //   this.setState({style : new_style}) 
-    // }
     
     render() {
       return <div style={this.state.style}>{this.props.value + 1}</div>
