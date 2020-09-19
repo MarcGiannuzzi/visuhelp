@@ -143,13 +143,10 @@ class Frame extends React.Component {
         }
         this.modifyFrame()
         console.log("Finished shuffling frame.")
+        this.pause = false
       
     }
 
-
-    sortFrame(){
-        
-    }
 
     delay(n) {  
         console.log("Delay")
@@ -451,7 +448,7 @@ class Frame extends React.Component {
     render() {
         var element_returned = <div>
             <Button variant="warning" onClick={(event) => {
-              this.shuffleFrame()
+                this.shuffleFrame()
             }}>Shuffle frame</Button>
             <br></br>
           <ButtonGroup>

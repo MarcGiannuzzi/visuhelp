@@ -3,74 +3,12 @@ import ReactDOM from 'react-dom';
 
 import './bootstrap/css/bootstrap.min.css';
 import './index.css';
-import logo from './data.svg';
-
-import Navbar from 'react-bootstrap/Navbar';
-import ToggleButton from 'react-bootstrap/ToggleButton';
-import Nav from 'react-bootstrap/Nav';
-import Form from 'react-bootstrap/Form';
-import FormControl from 'react-bootstrap/FormControl';
-import Button from 'react-bootstrap/Button';
 
 
 import App from './App';
 
 
 import * as serviceWorker from './serviceWorker';
-
-
-var navbar = <Navbar bg="dark" variant="dark">
-    <Nav className="mr-auto">
-      <Nav.Link href="#home">Sorting algorithms</Nav.Link>
-    </Nav>
-    <Form inline>
-      <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-      <Button variant="outline-light">Search</Button>
-    </Form>
-  </Navbar>
-
-
-ReactDOM.render(
-  <React.StrictMode>
-    {navbar}
-  </React.StrictMode>,
-  document.getElementById('navbar')
-);
-
-ReactDOM.render(
-  <React.StrictMode>
-    <img style={{height:"4cm"}} src={logo} className="App-logo" alt="logo" /> 
-    <p>
-      Welcome in VisuHelp
-    </p>
-    <Button
-          id="backgroundColorChangeButton"
-          type="checkbox"
-          variant="secondary"
-          onClick={(event) => {
-            if(document.body.style.backgroundColor == 'white'){
-              event.target.innerHTML = 'White Mode'
-              // event.target = 'White Mode'
-              document.body.style.backgroundColor = '#282c34'
-              document.body.style.color = 'white'
-            }
-            else{
-              event.target.innerHTML = 'Dark Mode'
-              document.body.style.backgroundColor = 'white'
-              document.body.style.color = 'black'
-            }
-          }}
-        >
-          Light Mode
-        </Button>
-    <br></br>
-    <br></br>
-    <br></br>
-  </React.StrictMode>,
-  document.getElementById('welcome')
-);
-
-
 
 
 ReactDOM.render(
