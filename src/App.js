@@ -29,6 +29,8 @@ class App extends React.Component {
       color:color_modes['bright'],
       backgroundColor:color_modes['dark'],
       margin:"auto", 
+      overflowX: "hidden",
+      overflowY: "auto"
     }
 
 
@@ -132,7 +134,7 @@ class App extends React.Component {
         <div style={{ fontSize: "15px" }}>Speed :<Slider defaultValue={- this.initial_speed} min={this.min_speed} max={this.max_speed} id="id_input_speed" type="range" onChange={this.changeSpeed}></Slider></div>
 
         {/* Thanks https://www.flaticon.com/authors/kiranshastry */}
-        <Frame style={this.state.style} speed={parseInt(this.state.speed)} nb_vertical_bars={parseInt(this.state.nb_vertical_bars)}></Frame>
+        <Frame style={{margin:'1cm'}} speed={parseInt(this.state.speed)} nb_vertical_bars={parseInt(this.state.nb_vertical_bars)}></Frame>
     </div>
     console.log("Done")
     return app

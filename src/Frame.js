@@ -65,7 +65,7 @@ class Frame extends React.Component {
 
     createFrame(){
         var frame =  <Grid fluid>
-                        <Row style={{margin:"1cm"}}>
+                        <Row style={{margin:"1cm", marginBottom:'0cm'}}>
                             {this.vertical_bars}
                         </Row>
                     </Grid>
@@ -80,14 +80,14 @@ class Frame extends React.Component {
         var frame = null
         if(new_vertical_bars === null){
             frame =  <Grid fluid>
-            <Row style={{margin:"1cm"}}>
+            <Row style={{margin:"1cm", marginBottom:'0cm'}}>
                 {this.vertical_bars}
             </Row>
         </Grid>
         }
         else{
             frame =  <Grid fluid>
-            <Row style={{margin:"1cm"}}>
+            <Row style={{margin:"1cm", marginBottom:'0cm'}}>
                 {new_vertical_bars}
             </Row>
         </Grid>
@@ -434,16 +434,16 @@ class Frame extends React.Component {
             }}>Shuffle frame</Button>
             <br></br>
           <ButtonGroup>
-            <Button variant="secondary" onClick={(event) => {
+            <Button style={{color:"#fff4d1"}} variant="secondary" onClick={(event) => {
               this.bubbleSort()
             }}>Bubble sort</Button>
-            <Button variant="secondary" onClick={(event) => {
+            <Button style={{color:"#fff4d1"}} variant="secondary" onClick={(event) => {
                 this.mergeSort()
             }}>Merge sort</Button>
-            <Button variant="secondary" onClick={(event) => {
+            <Button style={{color:"#fff4d1"}} variant="secondary" onClick={(event) => {
                 this.quickSort()
             }}>Quick sort</Button>
-            <Button variant="secondary" onClick={(event) => {
+            <Button  style={{color:"#fff4d1"}} variant="secondary" onClick={(event) => {
                 this.insertionSort()
             }}>Insertion sort</Button>
           </ButtonGroup>

@@ -15,10 +15,12 @@ class VerticalBar extends React.Component {
           border: "0.1cm solid white",
           borderRadius: "5px",
           backgroundColor:"green",
-          color: "white", 
+          color: "#fff4d1", 
           textAlign: "center", 
           padding:"auto" ,
-          margin:"auto"
+          margin:"auto",
+          marginBottom:"1cm",
+          borderColor:"black"
         }
 
         this.state = {style: this.vertical_bar_style};
