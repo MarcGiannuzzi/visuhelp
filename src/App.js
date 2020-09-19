@@ -2,12 +2,9 @@ import React from 'react';
 import './App.css';
 import Slider from '@material-ui/core/Slider'
 import Frame from './Frame'
-
-
 import './bootstrap/css/bootstrap.min.css';
 import './index.css';
 import logo from './data.svg';
-
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Form from 'react-bootstrap/Form';

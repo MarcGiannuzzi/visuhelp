@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+<<<<<<< HEAD
     "@material-ui/core": "^4.11.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
@@ -16,6 +17,14 @@
     "react-scripts": "3.4.3",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0"
+=======
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.5.0",
+    "@testing-library/user-event": "^7.2.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-scripts": "3.4.1"
+>>>>>>> 9d880c3e6fbdd26b3090cf72d3035ff7c83f687c
   },
   "scripts": {
     "start": "react-scripts start",
