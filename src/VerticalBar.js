@@ -48,7 +48,7 @@ class VerticalBar extends React.Component {
     }
     
     render() {
-      return <div style={this.state.style}>{this.props.value + 1}</div>
+      return <div style={this.state.style}>{this.props.value + 1}</div> 
     }
   }
 
