@@ -22,7 +22,7 @@ import Button from 'react-bootstrap/Button';
 
 
 
-var color_modes = {'dark' : "#282c34", 'bright' : '#ebde34'}
+var color_modes = {'dark' : "#282c34", 'bright' : '#fff4d1'}
 
 
 class App extends React.Component {
@@ -35,7 +35,9 @@ class App extends React.Component {
 
     this.style = {
       color:color_modes['bright'],
-      backgroundColor:color_modes['dark']
+      backgroundColor:color_modes['dark'],
+      margin:"auto", 
+      width: "95%"
     }
 
 
@@ -48,7 +50,7 @@ class App extends React.Component {
 
     this.changeNumberVerticalBars = this.changeNumberVerticalBars.bind(this);
     this.changeSpeed = this.changeSpeed.bind(this);
-    this.changeBackgroundColor = this.changeBackgroundColor .bind(this);
+    this.changeBackgroundColor = this.changeBackgroundColor.bind(this);
   }
 
 
@@ -67,19 +69,21 @@ class App extends React.Component {
   }
 
   changeBackgroundColor(event) {
-    var new_style = {}
+    var new_style = {margin:this.state.style.margin}
     if (this.state.style.backgroundColor == color_modes['bright']) {
       event.target.innerHTML = 'Bright Mode'
       new_style.backgroundColor = color_modes['dark']
       new_style.color = color_modes['bright']
+      // new_style.borderColor = color_modes['bright']
     }
     else {
       event.target.innerHTML = 'Dark Mode'
       new_style.backgroundColor = color_modes['bright']
       new_style.color = color_modes['dark']
+      // new_style.borderColor = color_modes['dark']
     }
     this.setState((state) => {
-      console.log("new_style", new_style)
+      this.style = new_style
       return {style:new_style}
     }, () => {
       console.log("Background color changed")
@@ -102,8 +106,8 @@ class App extends React.Component {
 
   render() {
     var navbar = <Navbar bg="dark" variant="dark">
-    <Nav>
-      <Nav.Link href="#home">Sorting algorithms</Nav.Link>
+    <Nav style={{color:color_modes['bright']}}>
+      Sorting algorithms
     </Nav>
     <Form inline>
       {/* <FormControl type="text" placeholder="Search" className="mr-sm-2" /> */}
@@ -118,27 +122,26 @@ class App extends React.Component {
     <Button
       id="backgroundColorChangeButton"
       type="checkbox"
-      variant="secondary"
+      // variant="secondary"
+      style={{backgroundColor:this.state.style.color, color:this.state.style.backgroundColor}}
       onClick={this.changeBackgroundColor}
     >
       Light Mode
     </Button>
-    <br></br>
-    <br></br>
-    <br></br>
+
   </div>
     
     
-    var app = <div style={this.style}>
+    var app = <div style={this.state.style}>
 
         {navbar}
         {presentation}
-        <span style={{ fontSize: "15px" }}>Number of vertical bars : <Slider defaultValue={parseInt(this.state.nb_vertical_bars)} min={3} max={10} id="id_input_nb_bars" type="range" step={1} onChange={this.changeNumberVerticalBars}></Slider> </span>
+        <div style={{ fontSize: "15px" }}>Number of vertical bars : <Slider defaultValue={parseInt(this.state.nb_vertical_bars)} min={3} max={10} id="id_input_nb_bars" type="range" step={1} onChange={this.changeNumberVerticalBars}></Slider> </div>
         <br></br>
-        <span style={{ fontSize: "15px" }}>Speed :<Slider defaultValue={- this.initial_speed} min={this.min_speed} max={this.max_speed} id="id_input_speed" type="range" onChange={this.changeSpeed}></Slider></span>
+        <div style={{ fontSize: "15px" }}>Speed :<Slider defaultValue={- this.initial_speed} min={this.min_speed} max={this.max_speed} id="id_input_speed" type="range" onChange={this.changeSpeed}></Slider></div>
 
         {/* Thanks https://www.flaticon.com/authors/kiranshastry */}
-        <Frame speed={parseInt(this.state.speed)} nb_vertical_bars={parseInt(this.state.nb_vertical_bars)}></Frame>
+        <Frame style={this.state.style} speed={parseInt(this.state.speed)} nb_vertical_bars={parseInt(this.state.nb_vertical_bars)}></Frame>
     </div>
     console.log("Done")
     return app

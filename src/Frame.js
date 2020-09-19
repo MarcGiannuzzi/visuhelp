@@ -14,12 +14,8 @@ import setBackgroundColor from './VerticalBar'
 class Frame extends React.Component {
     constructor(props) {
         super(props);
-        this.style = {
-            border: "1px solid white",
-            borderRadius:"5px", 
-            margin:"auto", 
-            width: "95%"
-        }
+        var color_modes = {'dark' : "#282c34", 'bright' : '#fff4d1'}
+
         this.nb_vertical_bars = this.props.nb_vertical_bars
         this.speed = this.props.speed
         this.refsVerticalBars = this.createVerticalBarsRefs(this.nb_vertical_bars)
@@ -40,7 +36,7 @@ class Frame extends React.Component {
         this.insertionSort = this.insertionSort.bind(this);
     }
 
-    componentWillReceiveProps({nb_vertical_bars, speed}) {
+    componentWillReceiveProps({nb_vertical_bars, speed, new_style}) {
         if(this.nb_vertical_bars == nb_vertical_bars){
             this.speed = speed
         }
@@ -74,7 +70,7 @@ class Frame extends React.Component {
     }
 
     createFrame(){
-        var frame =  <Grid fluid style={this.style}>
+        var frame =  <Grid fluid>
                         <Row style={{margin:"1cm"}}>
                             {this.vertical_bars}
                         </Row>
@@ -89,14 +85,14 @@ class Frame extends React.Component {
     modifyFrame(new_vertical_bars=null){
         var frame = null
         if(new_vertical_bars === null){
-            frame =  <Grid fluid fluid style={this.style}>
+            frame =  <Grid fluid>
             <Row style={{margin:"1cm"}}>
                 {this.vertical_bars}
             </Row>
         </Grid>
         }
         else{
-            frame =  <Grid fluid fluid style={this.style}>
+            frame =  <Grid fluid>
             <Row style={{margin:"1cm"}}>
                 {new_vertical_bars}
             </Row>
