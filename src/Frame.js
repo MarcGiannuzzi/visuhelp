@@ -154,7 +154,6 @@ class Frame extends React.Component {
         let index = left;
         let intial_left = left
         let initial_right = right
-        console.log("vertical_bars_refs : ", vertical_bars_refs)
         
         //Compare the two sub arrays and merge them in the sorted order
         while (left < left_limit && right < right_limit) {
@@ -283,9 +282,6 @@ class Frame extends React.Component {
 
 
     async partition(vertical_bars, start_index, end_index){
-        console.log("CHANGEMENT PIVOT")
-        console.log("start_index : ", start_index)
-        console.log("end_index : ", end_index)
         var smallest_index = start_index - 1
         var pivot = vertical_bars[end_index].props.children.props.value
         this.refsVerticalBars[end_index].current.setBackgroundColor('blue')
@@ -297,9 +293,6 @@ class Frame extends React.Component {
             await this.delay(this.speed)
             if(vertical_bars[current_index].props.children.props.value < pivot){
                 smallest_index += 1
-
-                console.log("smallest_index : ", smallest_index)
-                console.log("current_index : ", current_index)
                 
                 if(smallest_index !== current_index){
                     this.refsVerticalBars[current_index].current.setBackgroundColor('red')
@@ -352,7 +345,6 @@ class Frame extends React.Component {
 
 
     async quickSort(){
-        console.log("this.refsVerticalBars DEBUT FONCTION", this.refsVerticalBars)
         console.log("User chose Quick sorting algorithm.")
         var vertical_bars = this.vertical_bars.slice()
         var start_index = 0

@@ -29,7 +29,6 @@ class App extends React.Component {
       color:color_modes['bright'],
       backgroundColor:color_modes['dark'],
       margin:"auto", 
-      width: "95%"
     }
 
 
