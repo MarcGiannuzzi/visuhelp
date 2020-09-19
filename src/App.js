@@ -1,10 +1,7 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import './App.css';
 import Slider from '@material-ui/core/Slider'
-import VerticalBar from './VerticalBar'
 import Frame from './Frame'
-import { green } from '@material-ui/core/colors';
 
 
 import './bootstrap/css/bootstrap.min.css';
@@ -12,10 +9,8 @@ import './index.css';
 import logo from './data.svg';
 
 import Navbar from 'react-bootstrap/Navbar';
-import ToggleButton from 'react-bootstrap/ToggleButton';
 import Nav from 'react-bootstrap/Nav';
 import Form from 'react-bootstrap/Form';
-import FormControl from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
 
 
@@ -70,7 +65,7 @@ class App extends React.Component {
 
   changeBackgroundColor(event) {
     var new_style = {margin:this.state.style.margin}
-    if (this.state.style.backgroundColor == color_modes['bright']) {
+    if (this.state.style.backgroundColor === color_modes['bright']) {
       event.target.innerHTML = 'Bright Mode'
       new_style.backgroundColor = color_modes['dark']
       new_style.color = color_modes['bright']

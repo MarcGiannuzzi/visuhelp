@@ -1,21 +1,15 @@
 import React from 'react';
-import memoize from "memoize-one";
 
 import VerticalBar from './VerticalBar'
 import { Grid, Row, Col } from 'react-flexbox-grid';
 
 import Button from 'react-bootstrap/Button';
-import DropdownButton from 'react-bootstrap/DropdownButton';
-import Dropdown from 'react-bootstrap/Dropdown';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
 
-import setBackgroundColor from './VerticalBar'
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
 
 class Frame extends React.Component {
     constructor(props) {
         super(props);
-        var color_modes = {'dark' : "#282c34", 'bright' : '#fff4d1'}
-
         this.nb_vertical_bars = this.props.nb_vertical_bars
         this.speed = this.props.speed
         this.refsVerticalBars = this.createVerticalBarsRefs(this.nb_vertical_bars)
@@ -37,7 +31,7 @@ class Frame extends React.Component {
     }
 
     componentWillReceiveProps({nb_vertical_bars, speed, new_style}) {
-        if(this.nb_vertical_bars == nb_vertical_bars){
+        if(this.nb_vertical_bars === nb_vertical_bars){
             this.speed = speed
         }
         else{
@@ -307,7 +301,7 @@ class Frame extends React.Component {
                 console.log("smallest_index : ", smallest_index)
                 console.log("current_index : ", current_index)
                 
-                if(smallest_index != current_index){
+                if(smallest_index !== current_index){
                     this.refsVerticalBars[current_index].current.setBackgroundColor('red')
                     this.refsVerticalBars[smallest_index].current.setBackgroundColor('red')
                     await this.delay(this.speed)
@@ -334,7 +328,7 @@ class Frame extends React.Component {
             this.refsVerticalBars[current_index].current.setBackgroundColor('green')
             await this.delay(this.speed)
         }
-        if(smallest_index + 1 != end_index){
+        if(smallest_index + 1 !== end_index){
             this.refsVerticalBars[smallest_index + 1].current.setBackgroundColor('red')
             await this.delay(this.speed)
     
